@@ -22,7 +22,6 @@ set(SOURCES
     ${IMGUI_BACKENDS}/imgui_impl_sdl3.cpp
     ${IMGUI_BACKENDS}/imgui_impl_sdlrenderer3.cpp
 
-    # Add your source files here
     src/main.cpp
     src/Application.cpp
     # ...
