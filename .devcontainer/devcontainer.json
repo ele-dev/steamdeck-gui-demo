@@ -1,0 +1,21 @@
+{
+    "name": "C++ SDL3 Dev Environment",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "ms-vscode.cpptools-extension-pack"
+            ]
+        }
+    },
+    "features": {},
+    "runArgs": [
+        "--env=DISPLAY",
+        "--volume=/tmp/.X11-unix:/tmp/.X11-unix"
+    ],
+    "remoteUser": "vscode"
+}
