@@ -3,19 +3,26 @@
     "build": {
         "dockerfile": "Dockerfile"
     },
+    "remoteUser": "vscode",
     "customizations": {
         "vscode": {
             "extensions": [
                 "ms-vscode.cpptools",
                 "ms-vscode.cmake-tools",
                 "ms-vscode.cpptools-extension-pack"
-            ]
-        }
-    },
-    "features": {},
-    "runArgs": [
-        "--env=DISPLAY",
-        "--volume=/tmp/.X11-unix:/tmp/.X11-unix"
-    ],
-    "remoteUser": "vscode"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash"
+                    }
+                }
+            }
+        },
+        "runArgs": [
+            "--env=DISPLAY",
+            "--volume=/tmp/.X11-unix:/tmp/.X11-unix"
+        ]
+    }
 }
