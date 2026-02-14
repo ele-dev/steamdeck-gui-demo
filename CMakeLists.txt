@@ -8,6 +8,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# Static linking of c/c++ std libraries to avoid dragging
+add_link_options(-static-libstdc++ -static-libgcc)
+
 # ImGui directories
 set(IMGUI_DIR ${CMAKE_SOURCE_DIR}/external/imgui)
 set(IMGUI_BACKENDS ${IMGUI_DIR}/backends)
