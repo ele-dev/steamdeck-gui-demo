@@ -135,12 +135,8 @@ void Application::Update()
     this->m_perf_stats.average_frametime = 1000.0f / io.Framerate;
 }
 
-void Application::Render()
+void Application::Draw()
 {
-    ImGuiIO& io = ImGui::GetIO();
-
-    ImGui_ImplSDLRenderer3_NewFrame();
-    ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
 
     ImGui::SetNextWindowBgAlpha(0.3f);
@@ -154,10 +150,21 @@ void Application::Render()
     ImGui::Text("Left Joystick  : X = %d | Y = %d", this->m_left_stick_state.x_axis_val, this->m_left_stick_state.y_axis_val);
     ImGui::Text("Right Joystick : X = %d | Y = %d", this->m_right_stick_state.x_axis_val, this->m_right_stick_state.y_axis_val);
 
-    // render Gui elements code goes here
+    // render gui elements code goes here
     // ...
 
     ImGui::End();   
+}
+
+void Application::Render()
+{
+    ImGuiIO& io = ImGui::GetIO();
+
+    ImGui_ImplSDLRenderer3_NewFrame();
+    ImGui_ImplSDL3_NewFrame();
+    
+    this->Draw();
+
     ImGui::Render();
 
     // clear the render target (backbuffer)

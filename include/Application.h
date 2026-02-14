@@ -63,6 +63,7 @@ namespace Core
         void CheckForButtonMappings();
 
         void Update();
+        void Draw();
         void Render();
 
     private:
