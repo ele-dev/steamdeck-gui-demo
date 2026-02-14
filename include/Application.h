@@ -25,7 +25,7 @@ namespace Core
 {
     const int window_width = 1280;
     const int window_height = 720;
-    const std::string app_name = "Steamdeck demo app";
+    const std::string app_name = "Steamdeck Demo App";
     const std::string app_version = "1.0.0";
     const std::string app_identifier = "";
     const uint32_t min_frame_time_ms = 2;
@@ -63,7 +63,7 @@ namespace Core
         void CheckForButtonMappings();
 
         void Update();
-        void Draw();
+        void DrawGui();
         void Render();
 
     private:

@@ -135,8 +135,11 @@ void Application::Update()
     this->m_perf_stats.average_frametime = 1000.0f / io.Framerate;
 }
 
-void Application::Draw()
+void Application::DrawGui()
 {
+    // begin drawing the GUI elements for this frame
+    ImGui_ImplSDLRenderer3_NewFrame();
+    ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
 
     ImGui::SetNextWindowBgAlpha(0.3f);
@@ -145,38 +148,34 @@ void Application::Draw()
                              ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMove;
     ImGui::Begin("Simple perf monitor", NULL, flags);
 
-    // render overlay text in the corner
+    // render fixed position overlay box in the upper left corner
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", this->m_perf_stats.average_frametime, this->m_perf_stats.average_fps);
     ImGui::Text("Left Joystick  : X = %d | Y = %d", this->m_left_stick_state.x_axis_val, this->m_left_stick_state.y_axis_val);
     ImGui::Text("Right Joystick : X = %d | Y = %d", this->m_right_stick_state.x_axis_val, this->m_right_stick_state.y_axis_val);
 
-    // render gui elements code goes here
+    // gui elements code goes here
     // ...
 
-    ImGui::End();   
+    // finish gui drawing and render
+    ImGui::End();
+    ImGui::Render();
+    ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), this->m_renderer);
 }
 
 void Application::Render()
 {
     ImGuiIO& io = ImGui::GetIO();
 
-    ImGui_ImplSDLRenderer3_NewFrame();
-    ImGui_ImplSDL3_NewFrame();
-    
-    this->Draw();
-
-    ImGui::Render();
-
     // clear the render target (backbuffer)
     SDL_SetRenderScale(this->m_renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);    
     SDL_SetRenderDrawColorFloat(this->m_renderer, 255.0f, 255.0f, 255.0f, 1.0f);
     SDL_RenderClear(this->m_renderer);
 
-    // render directly with SDL
+    // render the scene (textures, game graphics, backgrounds, etc.)
     // ...
 
-    // render GUI elements on top of the scene
-    ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), this->m_renderer);
+    // render 2D GUI elements on top of the scene
+    this->DrawGui();
 
     // present rendered frame
     SDL_RenderPresent(this->m_renderer);
@@ -221,7 +220,7 @@ bool Application::InitGui()
 
     // then create window and renderer
     SDL_WindowFlags window_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY | SDL_WINDOW_KEYBOARD_GRABBED;
-    if(!SDL_CreateWindowAndRenderer("Robot Control Center Prototype", 
+    if(!SDL_CreateWindowAndRenderer(app_name.c_str(), 
         fullscreenMode->w, fullscreenMode->h, 
         window_flags, 
         &this->m_window, 
@@ -244,7 +243,7 @@ bool Application::InitGui()
 #else
     // create window and renderer
     SDL_WindowFlags window_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY | SDL_WINDOW_KEYBOARD_GRABBED;
-    if(!SDL_CreateWindowAndRenderer("Teleoperation Center Prototype",
+    if(!SDL_CreateWindowAndRenderer(app_name.c_str(),
         window_width, window_height,
         window_flags, 
         &this->m_window, 
