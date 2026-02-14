@@ -71,15 +71,6 @@ bool Application::Init()
         return false;
     }
 
-    // prepare video pipeline for RTP streaming
-    result = this->m_video_decoder.Init();
-    if(!result) {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "Warning", "Failed to init video stream client", this->m_window);
-        return false;
-    } else {
-        std::cout << "Video pipeline ready.\n";
-    }
-
     // init additional stuff here
     ImGuiIO& io = ImGui::GetIO();
     io.IniFilename = nullptr;
@@ -131,10 +122,6 @@ void Application::Update()
     // Do state based input processing
     if(SDL_GetGamepadButton(this->m_gamepad, SDL_GAMEPAD_BUTTON_EAST)) {
         m_running = false;
-    }
-
-    if(SDL_GetGamepadButton(this->m_gamepad, SDL_GAMEPAD_BUTTON_WEST)) {
-        this->m_show_connect_window = true;
     }
 
     m_left_stick_state.x_axis_val = SDL_GetGamepadAxis(m_gamepad, SDL_GAMEPAD_AXIS_LEFTX);

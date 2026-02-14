@@ -17,7 +17,7 @@
 #include <vector>
 #include <memory>
 
-// compile options 
+// compile options
 // #define _USE_FULLSCREEN
 // #define _USE_ADAPTIVE_SYNC
 
@@ -36,22 +36,29 @@ namespace Core
         float average_fps = 0.0f;
     };
 
+    struct AnalogJoystickState
+    {
+        int x_axis_val = 0;
+        int y_axis_val = 0;
+        bool stick_pressed = false;
+    };
+
     class Application
     {
     public:
         Application();
         virtual ~Application();
-        Application(const Application& other) = delete;
-        Application& operator=(const Application&) = delete;
+        Application(const Application &other) = delete;
+        Application &operator=(const Application &) = delete;
 
         bool Init();
         void Run();
 
-        void AddLaunchArgument(const std::string& arg);
+        void AddLaunchArgument(const std::string &arg);
 
     private:
         bool InitGui();
-        const SDL_DisplayMode* GetFullscreenMode() const;
+        const SDL_DisplayMode *GetFullscreenMode() const;
         bool InitGamepad();
         void CheckForButtonMappings();
 
@@ -59,15 +66,15 @@ namespace Core
         void Render();
 
     private:
-        SDL_Window* m_window;
+        SDL_Window *m_window;
         SDL_DisplayID m_displayId;
-        SDL_Renderer* m_renderer;
-        SDL_Gamepad* m_gamepad;
+        SDL_Renderer *m_renderer;
+        SDL_Gamepad *m_gamepad;
 
         bool m_running;
 
-        NetCore::AnalogJoystickState m_left_stick_state = {};
-        NetCore::AnalogJoystickState m_right_stick_state = {};
+        AnalogJoystickState m_left_stick_state = {};
+        AnalogJoystickState m_right_stick_state = {};
         PerformanceStats m_perf_stats = {};
         std::vector<std::string> m_launch_args = {};
     };
